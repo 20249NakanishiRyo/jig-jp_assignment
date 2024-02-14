@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>メモアプリ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="sidebar">
+    <h2>メモ一覧</h2>
+    <button id="new-memo-btn">新規メモ作成</button>
+    <ul id="memo-list"></ul>
+  </div>
+  <div class="memo-editor">
+    <h2>メモ編集</h2>
+    <form id="memo-form">
+      <div class="title-group">
+        <label for="title">タイトル：</label>
+        <input type="text" id="title" name="title" maxlength="100" required>
+      </div>
+      <div class="content-group">
+        <label for="content">本文：</label>
+        <textarea id="content" name="content" rows="6" maxlength="1000" required></textarea>
+      </div>
+      <div class="color-group">
+        <label for="color">色：</label>
+        <!-- <input type="color" id="color" name="color"> -->
+        <select id="color" name="color">
+          <option value="#ff0000">赤</option>
+          <option value="#00ff00">緑</option>
+          <option value="#0000ff">青</option>
+          <option value="#ffff00">黄</option>
+          <option value="#ff00ff">ピンク</option>
+          <option value="#00ffff">シアン</option>
+          <option value="#ff8800">オレンジ</option>
+          <option value="#888888">グレー</option>
+        </select>
+      </div>
+      <br>
+      <input type="submit" value="保存">
+      <button type="button" id="delete-btn" style="display: none;">削除</button>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
