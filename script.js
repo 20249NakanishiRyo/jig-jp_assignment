@@ -1,6 +1,24 @@
 let selectedIndex = null; // 選択されたメモのインデックス
 
-// ローカルストレージからメモを取得してリストに表示
+  // 色を少し暗くする関数
+  function darkenColor(color) {
+    // 色コードを16進数からRGBに変換
+    const hex = color.substring(1);
+    const rgb = parseInt(hex, 16);
+    // RGB値を取得
+    let r = (rgb >> 16) & 0xff;
+    let g = (rgb >>  8) & 0xff;
+    let b = (rgb >>  0) & 0xff;
+    // 色を暗くする
+    r = Math.floor(r * 0.8); // 80%の明度にする
+    g = Math.floor(g * 0.8);
+    b = Math.floor(b * 0.8);
+    // RGB値を16進数に変換して色コードを作成
+    const darkHex = ((r << 16) | (g << 8) | b).toString(16);
+    return '#' + darkHex.padStart(6, '0'); // 色コードを返す
+  }
+
+  // ローカルストレージからメモを取得してリストに表示
   function displayMemos() {
     const memoList = document.getElementById('memo-list');
     memoList.innerHTML = ''; // メモ一覧をリセット
@@ -90,20 +108,30 @@ let selectedIndex = null; // 選択されたメモのインデックス
 
   // メモ一覧のリストアイテムにマウスが乗ったときの処理
   document.getElementById('memo-list').addEventListener('mouseover', (e) => {
-    const index = parseInt(e.target.dataset.index);
-    if (!isNaN(index)) {
-      e.target.classList.add('hovered');
+    const target = e.target;
+    if (target.tagName === 'LI') {
+      target.classList.add('hovered');
+      const index = parseInt(target.dataset.index);
+      const memos = JSON.parse(localStorage.getItem('memos')) || [];
+      const memo = memos[index];
+      const originalColor = memo.color || '#ffffff'; // メモの色情報を取得
+      const darkenedColor = darkenColor(originalColor); // 色を少し暗くする
+      target.style.backgroundColor = darkenedColor; // 少し暗い色を背景色として設定
     }
   });
 
   // メモ一覧のリストアイテムからマウスが離れたときの処理
   document.getElementById('memo-list').addEventListener('mouseout', (e) => {
-    const index = parseInt(e.target.dataset.index);
-    if (!isNaN(index)) {
-      e.target.classList.remove('hovered');
+    const target = e.target;
+    if (target.tagName === 'LI') {
+      target.classList.remove('hovered');
+      const index = parseInt(target.dataset.index);
+      const memos = JSON.parse(localStorage.getItem('memos')) || [];
+      const memo = memos[index];
+      target.style.backgroundColor = memo.color || '#ffffff'; // メモの色情報を背景色として設定
     }
   });
-  
+
   // メモフォームの送信イベントリスナー
   document.getElementById('memo-form').addEventListener('submit', (e) => {
     e.preventDefault();
