@@ -90,6 +90,9 @@ function updateMemoListStyles() {
 // メモ一覧をリセットする関数
 function resetMemoList() {
   const memoList = document.getElementById('memo-list');
+  document.getElementById("search-by-title").value = "";
+  document.getElementById("search-by-content").value = "";
+  document.getElementById("search-by-color").value = "none";
   memoList.innerHTML = ''; // メモ一覧をリセット
   displayMemos(); // メモ一覧を再表示
 }
@@ -143,60 +146,7 @@ function darkenMemo() {
   });
 }
 
-// メモのタイトルで検索する関数
-function searchMemosByTitle() {
-  const searchInput = document.getElementById('search-by-title').value.toLowerCase();
-  const memoList = document.getElementById('memo-list');
-  const memoItems = memoList.getElementsByTagName('li');
-  
-  Array.from(memoItems).forEach((memoItem) => {
-    const memoTitle = memoItem.textContent.toLowerCase();
-    if (memoTitle.includes(searchInput) && memoList.children[index].style.display === 'block') {
-      memoItem.style.display = 'block';
-    } else {
-      memoItem.style.display = 'none';
-    }
-  });
-}
-
-// メモの本文で検索する関数
-function searchMemosByContent() {
-  const searchText = document.getElementById('search-by-content').value.toLowerCase();
-  const memos = JSON.parse(localStorage.getItem('memos')) || [];
-  const memoList = document.getElementById('memo-list');
-
-  memos.forEach((memo, index) => {
-    const memoContent = memo.content.toLowerCase();
-
-    if (memoContent.includes(searchText) && memoList.children[index].style.display === 'block') {
-      memoList.children[index].style.display = 'block';
-    } else {
-      memoList.children[index].style.display = 'none';
-    }
-  });
-}
-
-// メモの色で検索する関数
-function searchMemosByColor() {
-  const selectedColor = document.getElementById('search-by-color').value;
-  const memoList = document.getElementById('memo-list');
-  const memos = JSON.parse(localStorage.getItem('memos')) || [];
-  // 検索しないだった場合メモを再表示
-  if (selectedColor === "none") {
-    memos.forEach((memo, index) => {
-        memoList.children[index].style.display = 'block';
-    });
-  } else {
-    memos.forEach((memo, index) => {
-      if (memo.color === selectedColor && memoList.children[index].style.display === 'block') {
-        memoList.children[index].style.display = 'block';
-      } else {
-        memoList.children[index].style.display = 'none';
-      }
-    });
-  } 
-}
-
+// 検索を行う関数
 function searchMemos() {
   const searchTitle = document.getElementById('search-by-title').value.toLowerCase();
   const searchContent = document.getElementById('search-by-content').value.toLowerCase();
@@ -207,6 +157,7 @@ function searchMemos() {
   memos.forEach((memo, index) => {
     const memoTitle = memo.title.toLowerCase();
     const memoContent = memo.content.toLowerCase();
+    // 色で検索を行うかどうかの分岐
     if (searchColor === "none") {
       if (memoTitle.includes(searchTitle) && memoContent.includes(searchContent)) {
         memoList.children[index].style.display = 'block';
