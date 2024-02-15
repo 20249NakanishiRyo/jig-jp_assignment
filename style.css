@@ -68,3 +68,7 @@ body {
   margin-left: 10px; /* 入力フィールドとラベルの間に余白を設定 */
 }
 
+#memo-list-container {
+  height: 80%; /* メモ一覧の高さを指定 */
+  overflow-y: auto; /* 縦方向のスクロールを有効にする */
+}

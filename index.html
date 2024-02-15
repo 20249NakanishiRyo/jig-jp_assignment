@@ -13,7 +13,9 @@
     <h2>メモ一覧</h2>
     <button id="new-memo-btn">新規メモ作成</button>
     <input type="text" id="search-input" placeholder="メモのタイトルで検索">
-    <ul id="memo-list"></ul>
+    <div id="memo-list-container">
+      <ul id="memo-list"></ul>
+    </div>
   </div>
   <div class="memo-editor">
     <h2>メモ編集</h2>
@@ -28,7 +30,6 @@
       </div>
       <div class="color-group">
         <label for="color">色：</label>
-        <!-- <input type="color" id="color" name="color"> -->
         <select id="color" name="color">
           <option value="#ff0000">赤</option>
           <option value="#00ff00">緑</option>
