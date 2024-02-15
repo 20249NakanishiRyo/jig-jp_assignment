@@ -1,5 +1,7 @@
 let selectedIndex = null; // 選択されたメモのインデックス
 
+// ここから関数の宣言
+
 // 色を少し暗くする関数
 function darkenColor(color) {
   // 色コードを16進数からRGBに変換
@@ -142,8 +144,8 @@ function darkenMemo() {
 }
 
 // メモのタイトルで検索する関数
-function searchMemos() {
-  const searchInput = document.getElementById('search-input').value.toLowerCase();
+function searchMemosByTitle() {
+  const searchInput = document.getElementById('search-by-title').value.toLowerCase();
   const memoList = document.getElementById('memo-list');
   const memoItems = memoList.getElementsByTagName('li');
   
@@ -157,8 +159,50 @@ function searchMemos() {
   });
 }
 
+// メモの本文で検索する関数
+function searchMemosByContent() {
+  const searchText = document.getElementById('search-by-content').value.toLowerCase();
+  const memos = JSON.parse(localStorage.getItem('memos')) || [];
+  const memoList = document.getElementById('memo-list');
+
+  memos.forEach((memo, index) => {
+    const memoContent = memo.content.toLowerCase();
+
+    if (memoContent.includes(searchText)) {
+      memoList.children[index].style.display = 'block';
+    } else {
+      memoList.children[index].style.display = 'none';
+    }
+  });
+}
+
+// メモの色で検索する関数
+function searchMemosByColor() {
+  const selectedColor = document.getElementById('search-by-color').value;
+  const memoList = document.getElementById('memo-list');
+  const memos = JSON.parse(localStorage.getItem('memos')) || [];
+  // 検索しないだった場合メモを再表示
+  if (selectedColor === "none") {
+    memos.forEach((memo, index) => {
+        memoList.children[index].style.display = 'block';
+    });
+  } else {
+    memos.forEach((memo, index) => {
+      if (memo.color === selectedColor) {
+        memoList.children[index].style.display = 'block';
+      } else {
+        memoList.children[index].style.display = 'none';
+      }
+    });
+  } 
+}
+
+// ここまで関数の宣言
+
 // 初期表示
 displayMemos();
+
+// ここからイベントリスナー
 
 // 新規メモ作成ボタンをクリックしたときの処理
 document.getElementById('new-memo-btn').addEventListener('click', () => {
@@ -246,5 +290,17 @@ document.getElementById('delete-btn').addEventListener('click', () => {
   clearForm(); // フォームをクリア
 });
 
-// 検索ボタンまたは入力フィールドが変更されたときに検索を実行
-document.getElementById('search-input').addEventListener('input', searchMemos);
+// タイトルで検索の入力フィールドが変更されたときに検索を実行
+document.getElementById('search-by-title').addEventListener('input', searchMemosByTitle);
+
+// タイトルで検索の入力フィールドが変更されたときに検索を実行
+document.getElementById('search-by-content').addEventListener('input', searchMemosByContent);
+
+// 色で検索を実行
+document.getElementById('search-by-color').addEventListener('change', searchMemosByColor);
+
+// 詳細検索ボタンがクリックされたときの処理
+document.getElementById('advanced-search-btn').addEventListener('click', () => {
+  const advancedSearchOptions = document.getElementById('advanced-search-options');
+  advancedSearchOptions.classList.toggle('hidden');
+});

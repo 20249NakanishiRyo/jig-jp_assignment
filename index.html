@@ -12,7 +12,25 @@
   <div class="sidebar">
     <h2>メモ一覧</h2>
     <button id="new-memo-btn">新規メモ作成</button>
-    <input type="text" id="search-input" placeholder="メモのタイトルで検索">
+    <input type="text" id="search-by-title" placeholder="メモのタイトルで検索">
+    <button id="advanced-search-btn">▼詳細検索</button>
+    <div id="advanced-search-options" class="hidden">
+      <!-- 詳細検索オプション -->
+      <label for="search-by-content">本文で検索:</label>
+      <input type="text" id="search-by-content"><br>
+      <label for="search-by-color">色で検索:</label>
+      <select id="search-by-color">
+        <option value="none">検索しない</option>
+        <option value="#ff0000">赤</option>
+        <option value="#00ff00">緑</option>
+        <option value="#0000ff">青</option>
+        <option value="#ffff00">黄</option>
+        <option value="#ff00ff">紫</option>
+        <option value="#00ffff">シアン</option>
+        <option value="#ff8800">オレンジ</option>
+        <option value="#888888">グレー</option>
+      </select>
+    </div>
     <div id="memo-list-container">
       <ul id="memo-list"></ul>
     </div>

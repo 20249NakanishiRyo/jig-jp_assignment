@@ -72,3 +72,8 @@ body {
   height: 80%; /* メモ一覧の高さを指定 */
   overflow-y: auto; /* 縦方向のスクロールを有効にする */
 }
+
+/* 非表示用のクラス */
+.hidden {
+  display: none;
+}
