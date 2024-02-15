@@ -29,6 +29,7 @@ function displayMemos() {
     memoItem.style.backgroundColor = memo.color || '#ffffff'; // メモの色情報を背景色として設定
     memoItem.dataset.index = index;
     memoList.appendChild(memoItem);
+  setTitleColor();
   });
 }
 
@@ -110,6 +111,22 @@ function resetMemoListColors() {
   });
 }
 
+// メモ一覧の背景色が青のメモのタイトルの色を変更する関数
+function setTitleColor() {
+  const memoList = document.getElementById('memo-list');
+  const memoItems = memoList.getElementsByTagName('li');
+
+  Array.from(memoItems).forEach((memoItem) => {
+    const memoColor = memoItem.style.backgroundColor;
+
+    if (memoColor === 'rgb(0, 0, 255)') {
+      memoItem.style.color = 'white'; // 背景色が青の場合、タイトルの色を白に設定
+    } else {
+      memoItem.style.color = 'black'; // それ以外の場合は黒に設定
+    }
+  });
+}
+
 // メモを暗くする関数
 function darkenMemo() {
   const memoListItems = document.querySelectorAll('#memo-list li');
@@ -143,7 +160,7 @@ function searchMemos() {
 // 初期表示
 displayMemos();
 
-// 新規メモ作成ボタンのクリックイベントリスナー
+// 新規メモ作成ボタンをクリックしたときの処理
 document.getElementById('new-memo-btn').addEventListener('click', () => {
   document.getElementById('memo-form').reset();
   document.getElementById('memo-form').removeAttribute('data-editing-index');
@@ -210,7 +227,7 @@ document.getElementById('memo-list').addEventListener('mouseout', (e) => {
     }
   }
 });
-// メモフォームの送信イベントリスナー
+// メモフォームの送信ボタンをクリックしたときの処理
 document.getElementById('memo-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const title = document.getElementById('title').value;
@@ -222,7 +239,7 @@ document.getElementById('memo-form').addEventListener('submit', (e) => {
   resetMemoList(); // メモ一覧のリセット
 });
 
-// 削除ボタンのクリックイベントリスナー
+// 削除ボタンをクリックしたときの処理
 document.getElementById('delete-btn').addEventListener('click', () => {
   deleteMemo(selectedIndex); // 選択されたメモを削除
   resetMemoList(); // メモ一覧を更新
