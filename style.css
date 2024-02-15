@@ -48,19 +48,23 @@ body {
 }
 
 .title-group,
-.content-group {
+.content-group,
+.color-group {
   display: flex;
   align-items: center;
   padding: 10px;
 }
 
 .title-group label,
-.content-group label {
+.content-group label,
+.color-group label {
   flex: 0 0 100px; /* ラベルの幅を固定 */
 }
 
 .title-group input,
-.content-group textarea {
+.content-group textarea,
+.color-group select {
   flex: 1; /* 入力フィールドを残りの領域いっぱいに広げる */
   margin-left: 10px; /* 入力フィールドとラベルの間に余白を設定 */
 }
+

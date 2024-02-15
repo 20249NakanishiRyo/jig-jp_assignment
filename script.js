@@ -124,6 +124,22 @@ function darkenMemo() {
   });
 }
 
+// メモのタイトルで検索する関数
+function searchMemos() {
+  const searchInput = document.getElementById('search-input').value.toLowerCase();
+  const memoList = document.getElementById('memo-list');
+  const memoItems = memoList.getElementsByTagName('li');
+  
+  Array.from(memoItems).forEach((memoItem) => {
+    const memoTitle = memoItem.textContent.toLowerCase();
+    if (memoTitle.includes(searchInput)) {
+      memoItem.style.display = 'block';
+    } else {
+      memoItem.style.display = 'none';
+    }
+  });
+}
+
 // 初期表示
 displayMemos();
 
@@ -212,3 +228,6 @@ document.getElementById('delete-btn').addEventListener('click', () => {
   resetMemoList(); // メモ一覧を更新
   clearForm(); // フォームをクリア
 });
+
+// 検索ボタンまたは入力フィールドが変更されたときに検索を実行
+document.getElementById('search-input').addEventListener('input', searchMemos);
