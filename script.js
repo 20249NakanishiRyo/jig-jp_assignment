@@ -151,7 +151,7 @@ function searchMemosByTitle() {
   
   Array.from(memoItems).forEach((memoItem) => {
     const memoTitle = memoItem.textContent.toLowerCase();
-    if (memoTitle.includes(searchInput)) {
+    if (memoTitle.includes(searchInput) && memoList.children[index].style.display === 'block') {
       memoItem.style.display = 'block';
     } else {
       memoItem.style.display = 'none';
@@ -168,7 +168,7 @@ function searchMemosByContent() {
   memos.forEach((memo, index) => {
     const memoContent = memo.content.toLowerCase();
 
-    if (memoContent.includes(searchText)) {
+    if (memoContent.includes(searchText) && memoList.children[index].style.display === 'block') {
       memoList.children[index].style.display = 'block';
     } else {
       memoList.children[index].style.display = 'none';
@@ -188,13 +188,39 @@ function searchMemosByColor() {
     });
   } else {
     memos.forEach((memo, index) => {
-      if (memo.color === selectedColor) {
+      if (memo.color === selectedColor && memoList.children[index].style.display === 'block') {
         memoList.children[index].style.display = 'block';
       } else {
         memoList.children[index].style.display = 'none';
       }
     });
   } 
+}
+
+function searchMemos() {
+  const searchTitle = document.getElementById('search-by-title').value.toLowerCase();
+  const searchContent = document.getElementById('search-by-content').value.toLowerCase();
+  const searchColor = document.getElementById('search-by-color').value;
+  const memos = JSON.parse(localStorage.getItem('memos')) || [];
+  const memoList = document.getElementById('memo-list');
+
+  memos.forEach((memo, index) => {
+    const memoTitle = memo.title.toLowerCase();
+    const memoContent = memo.content.toLowerCase();
+    if (searchColor === "none") {
+      if (memoTitle.includes(searchTitle) && memoContent.includes(searchContent)) {
+        memoList.children[index].style.display = 'block';
+      } else {
+        memoList.children[index].style.display = 'none';
+      }
+    } else {
+      if (memoTitle.includes(searchTitle) && memoContent.includes(searchContent) && memo.color === searchColor) {
+        memoList.children[index].style.display = 'block';
+      } else {
+        memoList.children[index].style.display = 'none';
+      }
+    }
+  });
 }
 
 // ここまで関数の宣言
@@ -291,13 +317,13 @@ document.getElementById('delete-btn').addEventListener('click', () => {
 });
 
 // タイトルで検索の入力フィールドが変更されたときに検索を実行
-document.getElementById('search-by-title').addEventListener('input', searchMemosByTitle);
+document.getElementById('search-by-title').addEventListener('input', searchMemos);
 
 // タイトルで検索の入力フィールドが変更されたときに検索を実行
-document.getElementById('search-by-content').addEventListener('input', searchMemosByContent);
+document.getElementById('search-by-content').addEventListener('input', searchMemos);
 
 // 色で検索を実行
-document.getElementById('search-by-color').addEventListener('change', searchMemosByColor);
+document.getElementById('search-by-color').addEventListener('change', searchMemos);
 
 // 詳細検索ボタンがクリックされたときの処理
 document.getElementById('advanced-search-btn').addEventListener('click', () => {
